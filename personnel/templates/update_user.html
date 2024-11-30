@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-md-6 offset-md-3">
+    <br>
+    <h3>Güncelle</h3>
+    <hr>
+<form method="POST" action="{% url 'update_user' user.id %}">
+    {% csrf_token %}
+
+    {{ user_form.as_p }}
+    <br/>
+    <button type="submit" class="btn btn-secondary">Güncelle</button>
+    {% if user.is_superuser %}
+        <td><a href="{% url 'manager_dashboard' %}" type="submit" class="btn btn-primary">Geri</a></td>
+    {% else %}
+        <td><a href="{% url 'personnel_dashboard' %}" type="submit" class="btn btn-primary">Geri</a></td>
+    {% endif %}
+
+</form>
+</div>
+{% endblock %}

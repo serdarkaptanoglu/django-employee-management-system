@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-md-6 offset-md-3">
+<br>
+<h3>Çalışan Bilgisi</h3>
+<hr>
+{% if employees %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">İsim</th>
+      <th scope="col">Soyisim</th>
+      <th scope="col">Email</th>
+      <th scope="col">Yıllık İzin</th>
+      <th scope="col">Kalan İzin</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for employee in employees %}
+    <tr>
+      <th scope="row">{{employee.user.id}}</th>
+      <td>{{employee.user.first_name}}</td>
+      <td>{{employee.user.last_name}}</td>
+      <td>{{employee.user.email}}</td>
+      <td>{{employee.user.annual_leave_days}}</td>
+      <td>{{employee.user.remaining_leave_days}}</td>
+      <td><a href="{% url 'update_user' employee.user.id %}" type="submit" class="btn btn-primary">Düzenle</a></td>
+    </tr>
+  {% endfor %}
+  <td><a href="{% url 'late_employee' %}" type="submit" class="btn btn-danger">Geç Kalanlar</a></td>
+  <td><a href="{% url 'manage_leave_requests' %}" type="submit" class="btn btn-danger">Yıllık İzin Talepleri</a></td>
+  </tbody>
+</table>
+  {% else %}
+<div class="alert alert-danger">Henüz Çalışanınız Bulunmuyor..</div>
+{% endif %}
+</div>
+
+
+{% endblock %}

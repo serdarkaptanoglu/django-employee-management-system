@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+    <div class="container">
+        <div class="text-center mt-5">
+            <h2>Yıllık İzin Talebi</h2>
+            {% if remaining_days > 0 %}
+                <p>Kalan yıllık izin günleriniz: {{ remaining_days }} gün</p>
+                <form method="post">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <button type="submit">Talep Gönder</button>
+                </form>
+            {% else %}
+                <p>Yıllık izniniz bulunmamaktadır. Yeni bir izin talebi oluşturamazsınız.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+

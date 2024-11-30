@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-md-6 offset-md-3">
+<br>
+<h3>Kişisel Bilgiler</h3>
+<hr>
+{% if employee %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">İsim</th>
+      <th scope="col">Soyisim</th>
+      <th scope="col">Email</th>
+      <th scope="col">Yıllık İzin</th>
+      <th scope="col">Kalan İzin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">{{user.id}}</th>
+      <td>{{user.first_name}}</td>
+      <td>{{user.last_name}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.annual_leave_days}}</td>
+      <td>{{user.remaining_leave_days}}</td>
+      <td><a href="{% url 'update_user' user.id %}" type="submit" class="btn btn-primary">Düzenle</a></td>
+    </tr>
+    <tr>
+      <td><a href="{% url 'request_leave' %}" type="submit" class="btn btn-danger">Yıllık İzin Talebi</a></td>
+    </tr>
+
+  </tbody>
+</table>
+{% endif %}
+</div>
+
+
+{% endblock %}

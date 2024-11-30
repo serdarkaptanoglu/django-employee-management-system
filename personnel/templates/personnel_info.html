@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-md-6 offset-md-3">
+    <br>
+    <h3>Hoş Geldiniz <small>{{request.user}}</small> </h3>
+    <hr>
+    <h3>Güncelle</h3>
+    <hr>
+<form method="POST" action="{% url 'update_user' user.id %}">
+    {% csrf_token %}
+
+    {{ user_form.as_p }}
+    <br/>
+    <button type="submit" class="btn btn-secondary">Güncelle</button>
+</form>
+</div>
+{% endblock %}
+
