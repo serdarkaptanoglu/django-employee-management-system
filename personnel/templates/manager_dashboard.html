@@ -28,13 +28,14 @@
       <td><a href="{% url 'update_user' employee.user.id %}" type="submit" class="btn btn-primary">Düzenle</a></td>
     </tr>
   {% endfor %}
-  <td><a href="{% url 'late_employee' %}" type="submit" class="btn btn-danger">Geç Kalanlar</a></td>
+  <td><a href="{% url 'late_employees_view' %}" type="submit" class="btn btn-danger">Geç Kalanlar</a></td>
   <td><a href="{% url 'manage_leave_requests' %}" type="submit" class="btn btn-danger">Yıllık İzin Talepleri</a></td>
   </tbody>
 </table>
   {% else %}
 <div class="alert alert-danger">Henüz Çalışanınız Bulunmuyor..</div>
 {% endif %}
+
 </div>
 
 

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="col-md-6 offset-md-3">
+<br>
+<h3>Geç Kalan Çalışan Bilgisi</h3>
+<hr>
+{% if late_employees %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Ad Soyad</th>
+      <th scope="col">İşe Başlama Saati</th>
+      <th scope="col">Geç Kalma Süresi (Dakika)</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for employee in late_employees %}
+        <tr>
+            <td>{{ employee.employee.user.get_full_name }}</td>
+            <td>{{ employee.started_work|date:"H:i" }}</td>
+            <td>{{ employee.lateness_minutes }}</td>
+        </tr>
+  {% endfor %}
+  </tbody>
+</table>
+  {% else %}
+<div class="alert alert-danger">Bugün hiç kimse geç kalmadı.</div>
+{% endif %}
+    <a href="{% url 'manager_dashboard' %}">Yönetici Paneline Dön</a>
+</div>
+
+{% endblock %}

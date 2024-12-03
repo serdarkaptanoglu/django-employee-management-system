@@ -1,10 +1,12 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.timezone import localtime
 from .forms import EmployeeRegisterForm, LoginForm, UpdateUserForm, LeaveRequestForm
 from .models import Employee, EmployeeWorkInfo, LeaveRequest
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
 
 def home(request):
@@ -96,12 +98,28 @@ def personnel_dashboard(request):
     return render(request, 'personnel_dashboard.html', {'employee': employee})
 
 
-def late_employee(request):
-    work_infos = EmployeeWorkInfo.objects.filter(employee__user=request.user).order_by('-started_work')
-    for info in work_infos:
-        lateness = info.calculate_lateness()
-        info.lateness = f"{lateness:.2f} dakika" if lateness > 0 else "Geç kalmadınız"
-    return render(request, 'late_employee.html', {'work_infos': work_infos})
+def late_employees_view(request):
+    if not request.user.is_superuser:
+        messages.info(request, "Bu sayfaya yalnızca yöneticiler erişebilir.")
+        return redirect('home')
+
+    today = localtime().date()
+    late_employees = []
+
+    work_infos = EmployeeWorkInfo.objects.filter(started_work__date=today)
+    for work_info in work_infos:
+        lateness_minutes = work_info.calculate_lateness()
+        if lateness_minutes > 0:
+            late_employees.append({
+                'employee': work_info.employee,
+                'lateness_minutes': round(lateness_minutes, 2),
+                'started_work': localtime(work_info.started_work),
+            })
+
+    context = {
+        'late_employees': late_employees
+    }
+    return render(request, 'late_employees.html', context)
 
 
 @login_required

@@ -39,7 +39,7 @@ class EmployeeWorkInfo(models.Model):
         return f'{self.employee.user}'
 
     def calculate_lateness(self):
-        work_start_time = time(8, 0)  # 08:00
+        work_start_time = time(8, 0)
         actual_start_time = self.started_work.time()
         if actual_start_time > work_start_time:
             delay = datetime.combine(self.started_work.date(), actual_start_time) - \
