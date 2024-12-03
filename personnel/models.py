@@ -60,7 +60,7 @@ class LeaveRequest(models.Model):
     def save(self, *args, **kwargs):
         if self.start_date and self.end_date:
             delta = self.end_date - self.start_date
-            self.leave_days = delta.days + 1  # Başlangıç ve bitiş günü dahil
+            self.leave_days = delta.days + 1
         super().save(*args, **kwargs)
 
     def __str__(self):
